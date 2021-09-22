@@ -1,0 +1,25 @@
+import {Reducer, ReducerState, ReducerStateWithoutAction, ReducerWithoutAction} from "react";
+
+/** 状态切片的名称暂定为string 类型，事实上可以支持所有Map对象支持的类型；*/
+type StatePieceName = string;
+
+/** ElfDispatch 相比与 Dispatch 支持接收两个参数，即：Action.type，Action.payload; 同时也支持分发Action对象 */
+type ElfDispatch = (x: string | Action, payload?: any) => void;
+
+interface Action {
+    type: string,
+    payload?: any,
+    error?: boolean,
+    meta?: any
+}
+
+interface ReducerPiece {
+    reducer: Reducer<ReducerState<any>, Action>,
+    name: StatePieceName,
+    init: any,
+    initializer?: (arg: any) => ReducerStateWithoutAction<ReducerWithoutAction<any>>
+}
+
+interface StoreProps {
+    reducers: Array<ReducerPiece>,
+}
