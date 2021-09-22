@@ -16,6 +16,10 @@
     "/README.MD",
     "/LICENSE"
   ],
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/spstar/react-elf.git"
+  },
   "engines": {
     "node": ">=10"
   },
