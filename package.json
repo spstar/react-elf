@@ -49,7 +49,7 @@
     "trailingComma": "es5"
   },
   "name": "react-elf",
-  "author": "xiangli",
+  "author": "spstar",
   "module": "dist/react-elf.esm.js",
   "size-limit": [
     {
@@ -81,9 +81,5 @@
     "tsdx": "^0.14.1",
     "tslib": "^2.3.1",
     "typescript": "^4.4.2"
-  },
-  "dependencies": {
-    "@types/lodash": "^4.14.172",
-    "lodash": "^4.17.21"
   }
 }

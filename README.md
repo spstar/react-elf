@@ -59,7 +59,7 @@ function reducer(state, action) {
 
 
 const init = {
-    name: 'example',
+    name: 'D',
     count: 0
 };
 
