@@ -9,7 +9,7 @@
 
 该状态管理器是对react-hooks 的一种封装， 能让你像使用hooks一样的方式，来管理你项目的状态。实现同react-redux相同的功能；
 
-> 
+    特点： 使用简单；体积小；支持Immutable数据； 支持订阅指定数据字段
 
 #### 1. 数据注册（Store Register）
 * 在`Router`节点之前注册 `Store` 这样可以保证`Store`中的数据可以用于任何位置
@@ -31,6 +31,23 @@ interface StoreProps {
 
 // 返回当前State 中指定字段的值
 type GetValueFromState = (state: any, field: any) => any;
+
+// 示例 Immutable 数据：
+function getValueFromState(state, field) {
+    return state.getIn(Array.isArray(field) ? field : [field]);
+}
+
+// usage::
+const TestMapData: FC = () => {
+    const [[value], dispatch] = useElfSubscribe('example-m', [['complexData', 'value']]);
+
+    return (
+        <div>
+            <span>订阅的Map 数据：{value}</span>
+            <button onClick={() => dispatch('updateComplexValue', Math.random())}>更新Map 数据</button>
+        </div>
+    );
+};
 
 */
 
