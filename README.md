@@ -7,9 +7,9 @@
 
 ### react-elf 状态管理器使用说明
 
-#### 该状态管理器是对react-hooks 的一种封装， 能让你像使用hooks一样的方式，来管理你项目的状态。实现同react-redux相同的功能；
+该状态管理器是对react-hooks 的一种封装， 能让你像使用hooks一样的方式，来管理你项目的状态。实现同react-redux相同的功能；
 
-> 特点： 1. 灵活、简单 
+> 
 
 #### 1. 数据注册（Store Register）
 * 在`Router`节点之前注册 `Store` 这样可以保证`Store`中的数据可以用于任何位置
