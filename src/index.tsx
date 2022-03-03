@@ -19,6 +19,9 @@ export type StatePieceName = string;
 /** ElfDispatch 相比与 Dispatch 支持接收两个参数，即：Action.type，Action.payload; 同时也支持分发Action对象 */
 export type ElfDispatch = (x: string | Action, payload?: any) => void;
 
+// 自定义从state中取值的方法
+export type GetValueFromState = (state: any, field: any) => any;
+
 export interface Action {
     type: string,
     payload?: any,
@@ -30,11 +33,13 @@ export interface ReducerPiece {
     reducer: Reducer<ReducerState<any>, Action>,
     name: StatePieceName,
     init: any,
-    initializer?: (arg: any) => ReducerStateWithoutAction<ReducerWithoutAction<any>>
+    initializer?: (arg: any) => ReducerStateWithoutAction<ReducerWithoutAction<any>>,
+    getValueFromState?: GetValueFromState
 }
 
 export interface StoreProps {
     reducers: Array<ReducerPiece>,
+    getValueFromState?: GetValueFromState
 }
 
 /** all state piece dispatch container */
@@ -52,10 +57,19 @@ let CmpSubscribedFieldsMap: Map<StatePieceName, Map<Dispatch<any>, Array<any>>> 
 /** 订阅状态更新的组件，当状态更改了触发订阅组件状态更新的hook函数 */
 let SubscribedDispatchChainMap: Map<StatePieceName, Set<Dispatch<any>>> = new Map();
 
+/**
+ * User defined get value method map;
+ */
+let GetValueMethodMap: Map<StatePieceName, GetValueFromState> = new Map();
+
+let defaultGetValue = _get;
+
 const noopElfDispatch: ElfDispatch = () => undefined;
 
 // /** Store 注册器 */
-export default function Store({reducers}: StoreProps): ReactElement {
+export default function Store({reducers, getValueFromState}: StoreProps): ReactElement {
+    defaultGetValue = getValueFromState || defaultGetValue;
+
     return <>{reducers.map((it) => <StatePiece key={it.name} {...it} />)}</>;
 }
 
@@ -84,7 +98,7 @@ export function useElfSubscribe(name: StatePieceName, subscribableFields: any | 
     );
 
     return [
-        getPreciseState(getElfState(name), fields),
+        getPreciseState(name, getElfState(name), fields),
         getElfDispatch(name)
     ];
 }
@@ -99,13 +113,14 @@ export function getElfDispatch(name: StatePieceName): ElfDispatch {
     return DispatchMap.get(name) || noopElfDispatch;
 }
 
-const StatePiece: FC<ReducerPiece> = ({name, reducer, init, initializer}) => {
+const StatePiece: FC<ReducerPiece> = ({name, reducer, init, initializer, getValueFromState}) => {
     let [state, dispatch] = useReducer(reducer, init, initializer as undefined);
 
     useMemo(() => {
         PrevStateMap.set(name, new Map());
         CmpSubscribedFieldsMap.set(name, new Map());
         SubscribedDispatchChainMap.set(name, new Set());
+        GetValueMethodMap.set(name, getValueFromState || defaultGetValue);
     }, [name]);
 
     useEffect(() => {
@@ -117,7 +132,7 @@ const StatePiece: FC<ReducerPiece> = ({name, reducer, init, initializer}) => {
                 subscribableFields.some((field, idx) => {
                     const isSame = Object.is(
                         _get(PrevStateMap.get(name)?.get(subDispatch), idx),
-                        _get(state, field)
+                        (GetValueMethodMap.get(name) as GetValueFromState)(state, field)
                     );
 
                     if (isSame) {
@@ -131,7 +146,7 @@ const StatePiece: FC<ReducerPiece> = ({name, reducer, init, initializer}) => {
                 // 更新当前状态，保存为前一个状态；
                 PrevStateMap.get(name)?.set(
                     subDispatch,
-                    getPreciseState(state, subscribableFields)
+                    getPreciseState(name, state, subscribableFields)
                 );
             } else {
                 subDispatch(state);
@@ -170,6 +185,6 @@ function useSubscribe(name: StatePieceName): Dispatch<any> {
 }
 
 /** 接收状态对象，和一组名称数组，按序返回状态对象中对应字段值的数组 */
-function getPreciseState(state: ReducerState<any>, fields: Array<any>) {
-    return fields.map((field) => _get(state, field));
+function getPreciseState(name: StatePieceName, state: ReducerState<any>, fields: Array<any>) {
+    return fields.map((field) => (GetValueMethodMap.get(name) as GetValueFromState)(state, field));
 }

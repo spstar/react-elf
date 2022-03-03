@@ -1,5 +1,5 @@
 {
-  "version": "0.1.2",
+  "version": "0.1.3",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -13,7 +13,7 @@
   "description": "Manage your project states like redux with react hooks",
   "files": [
     "/dist",
-    "/README.MD",
+    "/V.0.1.2_README.md",
     "/LICENSE"
   ],
   "repository": {

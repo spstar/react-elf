@@ -1,9 +1,3 @@
-### react-elf
-
-[![][bundlesize-js-image]][unpkg-js-url]
-
-[bundlesize-js-image]: https://img.badgesize.io/https:/unpkg.com/react-elf/dist/react-elf.cjs.production.min.js?label=react%20elf.min.js&compression=gzip&style=flat
-[unpkg-js-url]: https://unpkg.com/react-elf/dist/react-elf.cjs.production.min.js
 
 ### react-elf 状态管理器使用说明
 

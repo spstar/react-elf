@@ -2,16 +2,17 @@ import {Action, ReducerPiece} from '../.';
 
 interface StateType {
     name: string,
-    count: number
+    count: number,
+    test: string
 }
 
-function reducer(state: StateType, action: Action) {
+function reducer(state: StateType, action: Action): StateType {
     switch (action.type) {
         case 'increase':
-            return { ...state, count: action.payload };
+            return {...state, count: action.payload};
 
         case 'updateTest':
-            return { ...state, test: action.payload };
+            return {...state, test: action.payload};
 
         default:
             return state;
@@ -21,7 +22,8 @@ function reducer(state: StateType, action: Action) {
 
 const init: StateType = {
     name: 'demo-name',
-    count: 0
+    count: 0,
+    test: ''
 };
 
 const reducers: Array<ReducerPiece> = [{
