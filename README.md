@@ -29,28 +29,6 @@ interface StoreProps {
     getValueFromState?: GetValueFromState
 }
 
-// 返回当前State 中指定字段的值
-type GetValueFromState = (state: any, field: any) => any;
-
-// 示例 Immutable 数据：
-function getValueFromState(state, field) {
-    return state.getIn(Array.isArray(field) ? field : [field]);
-}
-
-// usage::
-const TestMapData: FC = () => {
-    const [[value], dispatch] = useElfSubscribe('example-m', [['complexData', 'value']]);
-
-    return (
-        <div>
-            <span>订阅的Map 数据：{value}</span>
-            <button onClick={() => dispatch('updateComplexValue', Math.random())}>更新Map 数据</button>
-        </div>
-    );
-};
-
-*/
-
 // 注册方式：传入一个属性 reducers: Array<ReducerPiece>
 /**
 interface ReducerPiece {
@@ -62,6 +40,9 @@ interface ReducerPiece {
     getValueFromState?: GetValueFromState, // 0.1.3 版本支持
     initializer?: (arg: any) => ReducerStateWithoutAction<ReducerWithoutAction<any>>
 }
+
+// 返回当前State 中指定字段的值
+type GetValueFromState = (state: any, field: any) => any;
 */
 
 const App = () => {
@@ -213,4 +194,49 @@ const Increace = ({ children }) => {
         </button>
     );
 }
+```
+
+#### Immutable 数据使用示例
+```js
+// usage::
+const TestMapData: FC = () => {
+    const [[value], dispatch] = useElfSubscribe('example-m', [['complexData', 'value']]);
+
+    return (
+        <div>
+            <span>订阅的Map 数据：{value}</span>
+            <button onClick={() => dispatch('updateComplexValue', Math.random())}>更新Map 数据</button>
+        </div>
+    );
+};
+
+// reducer data::
+const MapState: Map<string, any> = Map({
+    key: 'Foo',
+    value: 99
+});
+
+const Init: Record.Factory<StateType> = Record({
+    name: 'record-state demo',
+    count: 0,
+    complexData: MapState
+}, 'DEMO_STATE');
+
+
+// 示例 Immutable 数据：
+function getValueFromState(state, field) {
+    return state.getIn(Array.isArray(field) ? field : [field]);
+}
+
+const reducers: Array<ReducerPiece> = [
+    {
+        reducer,
+        name: 'example-m',
+        init: new Init(),
+        getValueFromState(state, field) {
+            return state.getIn(Array.isArray(field) ? field : [field]);
+        }
+    },
+];
+
 ```
