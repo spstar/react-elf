@@ -13,7 +13,7 @@
   "description": "Manage your project states like redux with react hooks",
   "files": [
     "/dist",
-    "/V.0.1.2_README.md",
+    "/README.md",
     "/LICENSE"
   ],
   "repository": {

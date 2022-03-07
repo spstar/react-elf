@@ -137,7 +137,6 @@ const Decreace = ({ children }) => {
 ```js
 import {useElfSubscribe} from 'react-elf';
 
-// TS useElfSubscribe 描述：
 // declare function useElfSubscribe(name: StatePieceName, subscribableFields: any | any[]): [any[], ElfDispatch];
 
 const Count = () => {
@@ -154,8 +153,9 @@ const Count = () => {
 ```
 
     注意：这里有些需要注意的问题，如果你订阅的数据是引用型变量，请确保在更新状态的时候该引用型变量的改变；（这个问题是由于在判定状态值是否改变使用的是浅比较[Object.is]）
-    一般建议订阅引用型变量内部的基本类型的值；例如： `useElfSubscribe('example', ['pagination.size', 'pagination.current']) 等
-    如果不方便按照此种方法订阅值的更新，建议使用 useElf 订阅数据；
+    你也可以订阅引用型变量内部的基本类型的值；例如： `useElfSubscribe('example', ['pagination.size', 'pagination.current']) 等
+   
+   
 
 
 #### 5. 如果，只想获取某个数据片段，并不想订阅数据更新（当订阅的数据变更时并不会通知当前组件更新）
