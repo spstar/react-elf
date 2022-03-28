@@ -12,7 +12,8 @@
     特点： 使用简单；体积小；支持Immutable数据； 支持订阅指定数据字段
 
 #### 1. 数据注册（Store Register）
-* 在`Router`节点之前注册 `Store` 这样可以保证`Store`中的数据可以用于任何位置
+* 在`Router`节点之前注册 `Store` 
+* Store 中的数据可以用于其下兄弟组件以及其所有子组件之中，不能在Store 注册的组件中使用Store 数据；
 
 ```js
 import ReactDom from 'react-dom';
