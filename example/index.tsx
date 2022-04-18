@@ -1,4 +1,4 @@
-import 'react-app-polyfill/ie11';
+// import 'react-app-polyfill/ie11';
 // import { FC, ReducerState } from '../node_modules/react';
 // // import ReactDOM from '../node_modules/react-dom';
 // import * as React from '../node_modules/react';
@@ -79,7 +79,7 @@ const Test: FC = ({children}) => {
 const App: FC = () => {
     return (
         <div>
-            <Store key={1} reducers={reducers}/>
+            <Store reducers={reducers}/>
             <div>Hello react-elf</div>
             <Count/>
             <Increace> + </Increace>

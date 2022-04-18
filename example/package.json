@@ -13,17 +13,26 @@
     "react-app-polyfill": "^1.0.0"
   },
   "alias": {
+    "process": false,
     "react": "../node_modules/react",
     "react-dom": "../node_modules/react-dom",
     "scheduler": "../node_modules/scheduler"
   },
   "devDependencies": {
+    "@parcel/config-default": "^2.3.2",
+    "@parcel/core": "^2.3.2",
+    "@parcel/node-resolver-core": "^2.3.2",
+    "@parcel/reporter-dev-server": "^2.3.2",
+    "@parcel/resolver-glob": "^2.3.2",
+    "@parcel/transformer-less": "^2.4.0",
+    "@parcel/transformer-sass": "2.4.0",
+    "@parcel/transformer-typescript-tsc": "^2.3.2",
     "@types/react": "^16.9.11",
     "@types/react-dom": "^16.8.4",
-    "parcel": "^2.0.0-rc.0",
-    "parcel-bundler": "^1.12.5",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "parcel": "^2.3.2",
+    "parcel-plugin-less-js-enabled": "^1.0.2",
+    "process": "^0.11.10",
     "typescript": "^3.4.5"
   }
 }
+

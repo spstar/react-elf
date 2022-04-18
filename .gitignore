@@ -6,3 +6,6 @@ dist
 .github
 
 .idea
+.vscode
+.parcel-cache
+yarn.lock

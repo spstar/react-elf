@@ -1,4 +1,4 @@
-import 'react-app-polyfill/ie11';
+// import 'react-app-polyfill/ie11';
 
 import Store, {getElfDispatch, getElfState, useElf, useElfSubscribe} from '../../dist';
 import * as React from 'react';
